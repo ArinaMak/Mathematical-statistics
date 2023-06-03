@@ -1,4 +1,5 @@
 library(VGAM)
+options(scipen= 999 )
 x_ = function(z, n){
   return (mean(z))
 }
@@ -72,8 +73,19 @@ lab2 = function(N, n){
     tmp_z_tr[i]=z_tr(x,n)
   }
   cat("x_   med   z_r   z_Q   z_tr")
-  cat("\nE(z)  ", E_z(tmp_x_,N), "&", E_z(tmp_medX,N), "&", E_z(tmp_z_R,N), "&", E_z(tmp_z_Q,N), "&", E_z(tmp_z_tr,N), " " )
-  cat("\nD(z)  ", D_z(tmp_x_,N), "&", D_z(tmp_medX,N), "&", D_z(tmp_z_R,N), "&", D_z(tmp_z_Q,N), "&", D_z(tmp_z_tr,N), " " )
+  
+  
+  cat("\n$E(z)$  &", round(E_z(tmp_x_,N),digits = 4), "&", round(E_z(tmp_medX,N),digits = 4), "&", round(E_z(tmp_z_R,N),digits = 4), "&", round(E_z(tmp_z_Q,N),digits = 4), "&", round(E_z(tmp_z_tr,N),digits = 4), " \\\ hline" )
+  cat("\n$E(z)$  &", round(D_z(tmp_x_,N),digits = 4), "&", round(D_z(tmp_medX,N),digits = 4), "&", round(D_z(tmp_z_R,N),digits = 4), "&", round(D_z(tmp_z_Q,N),digits = 4), "&", round(D_z(tmp_z_tr,N),digits = 4), " \\\ hline" )
+  
+  T1<-c(round(round(E_z(tmp_x_,N),digits = 4)-sqrt(round(D_z(tmp_x_,N),digits = 4)),digits = 4),round(round(E_z(tmp_x_,N),digits = 4)+sqrt(round(D_z(tmp_x_,N),digits = 4)),digits = 4))
+  T2<-c(round(round(E_z(tmp_medX,N),digits = 4)-sqrt(round(D_z(tmp_medX,N),digits = 4)),digits = 4),round(round(E_z(tmp_medX,N),digits = 4)+sqrt(round(D_z(tmp_medX,N),digits = 4)),digits = 4))
+  T3<-c(round(round(E_z(tmp_z_R,N),digits = 4)-sqrt(round(D_z(tmp_z_R,N),digits = 4)),digits = 4),round(round(E_z(tmp_z_R,N),digits = 4)+sqrt(round(D_z(tmp_z_R,N),digits = 4)),digits = 4))
+  T4<-c(round(round(E_z(tmp_z_Q,N),digits = 4)-sqrt(round(D_z(tmp_z_Q,N),digits = 4)),digits = 4),round(round(E_z(tmp_z_Q,N),digits = 4)+sqrt(round(D_z(tmp_z_Q,N),digits = 4)),digits = 4))
+  T5<-c(round(round(E_z(tmp_z_tr,N),digits = 4)-sqrt(round(D_z(tmp_z_tr,N),digits = 4)),digits = 4),round(round(E_z(tmp_z_tr,N),digits = 4)+sqrt(round(D_z(tmp_z_tr,N),digits = 4)),digits = 4))
+  
+  cat("\n$E(z) \ pm \ sqrt{D(z)}$  & [", T1[1],";", T1[2], "]", "&", "[", T2[1],";", T2[2], "]","&", "[", T3[1],";", T3[2], "]","&", "[", T4[1],";", T4[2], "]", "&", "[", T5[1],";", T5[2], "]", " \\\ hline" )
+ 
 }
 
 lab2(1000, 1000)
